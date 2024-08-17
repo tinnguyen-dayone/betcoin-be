@@ -1,6 +1,6 @@
-import express, { Express, Request, Response , Application } from 'express';
+import express, {Application} from 'express';
 import dotenv from 'dotenv';
-import verifyToken from './auth';
+import {verifyFacebookToken, verifyToken} from "./auth";
 
 
 //For env File
@@ -23,6 +23,17 @@ app.post('/auth/google', async (req, res) => {
 
 app.get('/', (req, res) => {
     res.status(200).json({})
+})
+
+app.post('/auth/facebook', async (req, res) => {
+    const { accesstoken } = req.body;
+    try {
+        const userPayload = await verifyFacebookToken(accesstoken);
+        res.status(200).json({ success: true, user: userPayload });
+    }catch (error) {
+        res.status(400).json({ success: false, message: 'Invalid Facebook token' });
+    }
+
 })
 
 app.listen(port, () => {

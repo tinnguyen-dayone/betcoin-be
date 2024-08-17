@@ -1,7 +1,7 @@
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client('945620604630-ht0arqssnno9t9sevdbaal5kgpvd0vm2.apps.googleusercontent.com');
 
-async function verifyToken(idToken: string) {
+ export async function verifyToken(idToken: string) {
     try {
         const ticket = await client.verifyIdToken({
             idToken: idToken,
@@ -23,4 +23,17 @@ async function verifyToken(idToken: string) {
         throw new Error('Invalid ID token');
     }
 }
-export default verifyToken;
+
+export const verifyFacebookToken = async (accessToken: string) => {
+    const response = await fetch(`https://graph.facebook.com/me?access_token=${accessToken}`);
+    const userData = await response.json();
+
+    if (userData.error) {
+        throw new Error('Invalid Facebook token');
+    }
+
+    // Tiến hành xử lý userData hoặc tạo mới người dùng
+    console.log(userData);
+};
+
+
