@@ -34,6 +34,7 @@ export const verifyFacebookToken = async (accessToken: string) => {
 
     // Tiến hành xử lý userData hoặc tạo mới người dùng
     console.log(userData);
+    return userData;
 };
 
 
