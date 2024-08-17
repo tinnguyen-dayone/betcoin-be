@@ -29,7 +29,7 @@ app.post('/auth/facebook', async (req, res) => {
     const { accesstoken } = req.body;
     try {
         const userPayload = await verifyFacebookToken(accesstoken);
-        res.status(200).json({ success: true, user: userPayload });
+        res.status(200).json({ success: true, userPayload });
     }catch (error) {
         res.status(400).json({ success: false, message: 'Invalid Facebook token' });
     }
