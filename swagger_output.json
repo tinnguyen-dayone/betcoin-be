@@ -2,12 +2,12 @@
   "openapi": "3.0.0",
   "info": {
     "version": "v1.0.0",
-    "title": "Swagger for Betcoin Demo BE",
+    "title": "Swagger Demo Project",
     "description": "Implementation of Swagger with TypeScript"
   },
   "servers": [
     {
-      "url": "http://localhost:8000",
+      "url": "https://betcoin-be.vercel.app",
       "description": ""
     }
   ],
@@ -30,7 +30,7 @@
                 "type": "object",
                 "properties": {
                   "idToken": {
-                    "example": "string",
+                    "example": "any",
                     "type": "string"
                   }
                 }
@@ -58,7 +58,7 @@
                 "type": "object",
                 "properties": {
                   "accesstoken": {
-                    "example": "string",
+                    "example": "any",
                     "type": "string"
                   }
                 }
@@ -72,7 +72,7 @@
   "components": {
     "securitySchemes": {
       "bearerAuth": {
-        "type": "http",
+        "type": "https",
         "scheme": "bearer"
       }
     }
