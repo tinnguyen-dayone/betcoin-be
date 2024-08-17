@@ -32,8 +32,7 @@ export const verifyFacebookToken = async (accessToken: string) => {
         throw new Error('Invalid Facebook token');
     }
 
-    // Tiến hành xử lý userData hoặc tạo mới người dùng
-    console.log(userData);
+
     return userData;
 };
 

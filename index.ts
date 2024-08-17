@@ -1,7 +1,8 @@
 import express, {Application} from 'express';
 import dotenv from 'dotenv';
 import {verifyFacebookToken, verifyToken} from "./auth";
-
+import swaggerUi from "swagger-ui-express";
+import swaggerOutput from "./swagger_output.json";
 
 //For env File
 dotenv.config();
@@ -21,9 +22,6 @@ app.post('/auth/google', async (req, res) => {
     }
 });
 
-app.get('/', (req, res) => {
-    res.status(200).json({})
-})
 
 app.post('/auth/facebook', async (req, res) => {
     const { accesstoken } = req.body;
@@ -36,6 +34,12 @@ app.post('/auth/facebook', async (req, res) => {
 
 })
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
+
+app.get('/', (req, res) => {
+    res.redirect('/api-docs');
+})
+
 app.listen(port, () => {
-    console.log(`Server is Fire at http://localhost:${port}`);
+    console.log(`Server is up at http://localhost:${port}`);
 });
