@@ -30,7 +30,7 @@
                 "type": "object",
                 "properties": {
                   "idToken": {
-                    "example": "any",
+                    "example": "string",
                     "type": "string"
                   }
                 }
@@ -58,7 +58,7 @@
                 "type": "object",
                 "properties": {
                   "accesstoken": {
-                    "example": "any",
+                    "example": "string",
                     "type": "string"
                   }
                 }
