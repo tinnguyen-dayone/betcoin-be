@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8000",
+      "url": "https://betcoin-be.vercel.app",
       "description": ""
     }
   ],
@@ -30,7 +30,8 @@
                 "type": "object",
                 "properties": {
                   "idToken": {
-                    "example": "any"
+                    "example": "any",
+                    "type": "string"
                   }
                 }
               }
@@ -57,21 +58,12 @@
                 "type": "object",
                 "properties": {
                   "accesstoken": {
-                    "example": "any"
+                    "example": "any",
+                    "type": "string"
                   }
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
@@ -80,7 +72,7 @@
   "components": {
     "securitySchemes": {
       "bearerAuth": {
-        "type": "http",
+        "type": "https",
         "scheme": "bearer"
       }
     }
