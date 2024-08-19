@@ -1,16 +1,15 @@
 import axios from "axios";
-import { OAuth2Client} from "google-auth-library";
+import {OAuth2Client} from "google-auth-library";
 
-const client = new OAuth2Client();
-
- export async function verifyToken(idToken: string) {
+new OAuth2Client();
+export async function verifyToken(idToken: string) {
     try {
         const response = await axios.post(
             'https://oauth2.googleapis.com/token',
             {
                 idToken,
-                client_id: '945620604630-ht0arqssnno9t9sevdbaal5kgpvd0vm2.apps.googleusercontent.com',
-                client_secret: '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',
+                client_id: process.env.GOOGLE_CLIENT_ID,
+                client_secret: process.env.GOOGLE_CLIENT_SECRET,
                 redirect_uri: 'postmessage',
                 grant_type: 'authorization_code'
             }
@@ -24,8 +23,7 @@ const client = new OAuth2Client();
                 }
             }
         );
-        const userDetails = userResponse.data;
-        return userDetails;
+        return userResponse.data;
     } catch (error) {
         console.error('Error verifying ID token:', error);
         throw new Error('Invalid ID token');
