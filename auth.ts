@@ -7,7 +7,7 @@ export async function verifyToken(idToken: string) {
         const response = await axios.post(
             'https://oauth2.googleapis.com/token',
             {
-                idToken,
+                code: idToken,
                 client_id: process.env.GOOGLE_CLIENT_ID,
                 client_secret: process.env.GOOGLE_CLIENT_SECRET,
                 redirect_uri: 'postmessage',
