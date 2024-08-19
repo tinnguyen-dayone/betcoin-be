@@ -3,12 +3,14 @@ import dotenv from 'dotenv';
 import {verifyFacebookToken, verifyToken} from "./auth";
 import swaggerUi from "swagger-ui-express";
 import swaggerOutput from "./swagger_output.json";
+import cors from "cors";
 
 //For env File
 dotenv.config();
 
 const app: Application = express();
 app.use(express.json())
+app.use(cors());
 
 const port = process.env.PORT || 8000;
 

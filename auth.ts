@@ -1,23 +1,31 @@
-const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client('945620604630-ht0arqssnno9t9sevdbaal5kgpvd0vm2.apps.googleusercontent.com');
+import axios from "axios";
+import { OAuth2Client} from "google-auth-library";
+
+const client = new OAuth2Client();
 
  export async function verifyToken(idToken: string) {
     try {
-        const ticket = await client.verifyIdToken({
-            idToken: idToken,
-            audience: '945620604630-ht0arqssnno9t9sevdbaal5kgpvd0vm2.apps.googleusercontent.com', // Đây là Client ID của backend
-        });
-        const payload = ticket.getPayload();
-
-        const userId = payload['sub']; // ID duy nhất của người dùng
-        const email = payload['email'];
-        const name = payload['name'];
-
-        console.log(`User ID: ${userId}`);
-        console.log(`Email: ${email}`);
-        console.log(`Name: ${name}`);
-
-        return payload;
+        const response = await axios.post(
+            'https://oauth2.googleapis.com/token',
+            {
+                idToken,
+                client_id: '945620604630-ht0arqssnno9t9sevdbaal5kgpvd0vm2.apps.googleusercontent.com',
+                client_secret: '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',
+                redirect_uri: 'postmessage',
+                grant_type: 'authorization_code'
+            }
+        );
+        const accessToken = response.data.access_token;
+        const userResponse = await axios.get(
+            'https://www.googleapis.com/oauth2/v3/userinfo',
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }
+        );
+        const userDetails = userResponse.data;
+        return userDetails;
     } catch (error) {
         console.error('Error verifying ID token:', error);
         throw new Error('Invalid ID token');
