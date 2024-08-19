@@ -1,29 +1,16 @@
-import axios from "axios";
-import {OAuth2Client} from "google-auth-library";
+import { OAuth2Client} from "google-auth-library";
 
-new OAuth2Client();
-export async function verifyToken(idToken: string) {
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET);
+
+ export async function verifyToken(idToken: string) {
     try {
-        const response = await axios.post(
-            'https://oauth2.googleapis.com/token',
-            {
-                code: idToken,
-                client_id: process.env.GOOGLE_CLIENT_ID,
-                client_secret: process.env.GOOGLE_CLIENT_SECRET,
-                redirect_uri: 'postmessage',
-                grant_type: 'authorization_code'
-            }
-        );
-        const accessToken = response.data.access_token;
-        const userResponse = await axios.get(
-            'https://www.googleapis.com/oauth2/v3/userinfo',
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            }
-        );
-        return userResponse.data;
+        const ticket = await client.verifyIdToken({
+            idToken: idToken,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+
+        return payload;
     } catch (error) {
         console.error('Error verifying ID token:', error);
         throw new Error('Invalid ID token');
